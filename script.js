@@ -69,6 +69,23 @@
             toggleCart();
         }
 
+        // Mobile menu functions
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            
+            navLinks.classList.toggle('mobile-active');
+            hamburger.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            
+            navLinks.classList.remove('mobile-active');
+            hamburger.classList.remove('active');
+        }
+
         // Smooth scroll for navigation links
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', (e) => {

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Soigné Fashion</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" href="images/Soigne logo.jpg">
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="header-content">
+            <div class="logo">Soigné Admin</div>
+            <div class="admin-nav">
+                <button class="nav-btn active" onclick="showSection('dashboard')">Dashboard</button>
+                <button class="nav-btn" onclick="showSection('products')">Products</button>
+                <button class="nav-btn" onclick="showSection('analytics')">Analytics</button>
+                <button class="nav-btn" onclick="showSection('orders')">Orders</button>
+            </div>
+            <div class="admin-actions">
+                <span class="admin-user">Welcome, Admin</span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="admin-section active">
+        <div class="dashboard-container">
+            <h1>Dashboard Overview</h1>
+            
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-info">
+                        <h3 id="total-products">0</h3>
+                        <p>Total Products</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <h3 id="total-sales">$0</h3>
+                        <p>Total Sales</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🛒</div>
+                    <div class="stat-info">
+                        <h3 id="total-orders">0</h3>
+                        <p>Total Orders</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-info">
+                        <h3 id="avg-order">$0</h3>
+                        <p>Average Order</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2>Quick Actions</h2>
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="showSection('products')">
+                        <span>➕</span>
+                        Add New Product
+                    </button>
+                    <button class="action-btn" onclick="showSection('analytics')">
+                        <span>📊</span>
+                        View Analytics
+                    </button>
+                    <button class="action-btn" onclick="showSection('orders')">
+                        <span>📋</span>
+                        Manage Orders
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <h2>Recent Activity</h2>
+                <div id="activity-list" class="activity-list">
+                    <!-- Activity items will be populated here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="admin-section">
+        <div class="products-container">
+            <div class="section-header">
+                <h1>Product Management</h1>
+                <button class="primary-btn" onclick="showAddProductForm()">Add New Product</button>
+            </div>
+
+            <!-- Add/Edit Product Form -->
+            <div id="product-form" class="product-form hidden">
+                <h2 id="form-title">Add New Product</h2>
+                <form onsubmit="saveProduct(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-name">Product Name</label>
+                            <input type="text" id="product-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-price">Price ($)</label>
+                            <input type="number" id="product-price" step="0.01" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-emoji">Emoji/Icon</label>
+                            <input type="text" id="product-emoji" placeholder="👕" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-category">Category</label>
+                            <select id="product-category" required>
+                                <option value="">Select Category</option>
+                                <option value="shirts">Shirts</option>
+                                <option value="pants">Pants</option>
+                                <option value="dresses">Dresses</option>
+                                <option value="jackets">Jackets</option>
+                                <option value="shoes">Shoes</option>
+                                <option value="accessories">Accessories</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-discount">Discount (%)</label>
+                            <input type="number" id="product-discount" min="0" max="100" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="product-stock">Stock Quantity</label>
+                            <input type="number" id="product-stock" min="0" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product-description">Description</label>
+                        <textarea id="product-description" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="secondary-btn" onclick="hideProductForm()">Cancel</button>
+                        <button type="submit" class="primary-btn">Save Product</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Products List -->
+            <div class="products-list">
+                <div class="list-header">
+                    <h2>All Products</h2>
+                    <div class="search-filter">
+                        <input type="text" id="search-products" placeholder="Search products..." onkeyup="filterProducts()">
+                        <select id="filter-category" onchange="filterProducts()">
+                            <option value="">All Categories</option>
+                            <option value="shirts">Shirts</option>
+                            <option value="pants">Pants</option>
+                            <option value="dresses">Dresses</option>
+                            <option value="jackets">Jackets</option>
+                            <option value="shoes">Shoes</option>
+                            <option value="accessories">Accessories</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="products-table" class="products-table">
+                    <!-- Products will be populated here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analytics Section -->
+    <section id="analytics" class="admin-section">
+        <div class="analytics-container">
+            <h1>Sales Analytics</h1>
+            
+            <div class="analytics-grid">
+                <!-- Sales Chart -->
+                <div class="chart-card">
+                    <h3>Sales Overview</h3>
+                    <canvas id="salesChart"></canvas>
+                </div>
+
+                <!-- Popular Products Chart -->
+                <div class="chart-card">
+                    <h3>Popular Products</h3>
+                    <canvas id="popularProductsChart"></canvas>
+                </div>
+
+                <!-- Category Performance -->
+                <div class="chart-card">
+                    <h3>Category Performance</h3>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+
+                <!-- Monthly Revenue -->
+                <div class="chart-card">
+                    <h3>Monthly Revenue</h3>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Detailed Analytics -->
+            <div class="detailed-analytics">
+                <h2>Detailed Reports</h2>
+                <div class="analytics-filters">
+                    <select id="time-filter" onchange="updateAnalytics()">
+                        <option value="7">Last 7 days</option>
+                        <option value="30" selected>Last 30 days</option>
+                        <option value="90">Last 3 months</option>
+                        <option value="365">Last year</option>
+                    </select>
+                </div>
+                
+                <div class="analytics-summary">
+                    <div class="summary-item">
+                        <h4>Best Selling Product</h4>
+                        <p id="best-product">Premium T-Shirt</p>
+                    </div>
+                    <div class="summary-item">
+                        <h4>Revenue Growth</h4>
+                        <p id="revenue-growth">+15.2%</p>
+                    </div>
+                    <div class="summary-item">
+                        <h4>Conversion Rate</h4>
+                        <p id="conversion-rate">3.4%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Orders Section -->
+    <section id="orders" class="admin-section">
+        <div class="orders-container">
+            <h1>Order Management</h1>
+            
+            <div class="orders-filters">
+                <select id="order-status-filter" onchange="filterOrders()">
+                    <option value="">All Orders</option>
+                    <option value="pending">Pending</option>
+                    <option value="processing">Processing</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+                <input type="date" id="order-date-filter" onchange="filterOrders()">
+            </div>
+
+            <div id="orders-table" class="orders-table">
+                <!-- Orders will be populated here -->
+            </div>
+        </div>
+    </section>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>

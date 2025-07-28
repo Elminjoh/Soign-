@@ -2,6 +2,47 @@
         let cart = [];
         let cartCount = 0;
         let cartTotal = 0;
+        let products = [];
+
+        // Load products from admin panel if available
+        function loadProducts() {
+            const adminProducts = localStorage.getItem('adminProducts');
+            if (adminProducts) {
+                products = JSON.parse(adminProducts);
+                updateProductDisplay();
+            }
+        }
+
+        // Update product display on main website
+        function updateProductDisplay() {
+            const productGrid = document.querySelector('.product-grid');
+            if (!productGrid || products.length === 0) return;
+            
+            productGrid.innerHTML = products.map(product => {
+                const discountedPrice = product.discount > 0 ? 
+                    product.price * (1 - product.discount / 100) : product.price;
+                
+                return `
+                    <div class="product-card">
+                        <div class="product-image">${product.emoji}</div>
+                        <div class="product-info">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-price">
+                                ${product.discount > 0 ? 
+                                    `<span style="text-decoration: line-through; color: #888; margin-right: 10px;">$${product.price}</span>
+                                     <span style="color: #e74c3c;">$${discountedPrice.toFixed(0)}</span>
+                                     <span style="background: #e74c3c; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; margin-left: 8px;">${product.discount}% OFF</span>` :
+                                    `$${product.price}`
+                                }
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart('${product.name}', ${discountedPrice}, '${product.emoji}')" ${product.stock === 0 ? 'disabled' : ''}>
+                                ${product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
 
         function addToCart(name, price, emoji) {
             cart.push({ name, price, emoji });
@@ -112,4 +153,9 @@
             const hero = document.querySelector('.hero');
             const scrolled = window.pageYOffset;
             hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+
+        // Load products when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
         });

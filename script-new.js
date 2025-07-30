@@ -64,36 +64,51 @@ let articles = [
     }
 ];
 
-let featuredStories = [
+let cultureContent = [
     {
-        id: 'featured-story-1',
-        category: 'Featured Story',
-        title: 'The Future of Sustainable Fashion',
-        subtitle: 'Exploring how conscious design is reshaping the industry\'s landscape',
-        author: 'Sarah Chen',
-        date: 'July 29, 2025',
-        image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&h=600&fit=crop',
-        content: 'The fashion industry is undergoing a revolutionary transformation towards sustainability...'
+        id: 1,
+        title: "Music & Fashion Collaborations",
+        description: "How artists and designers create cultural moments through fashion partnerships.",
+        image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=200&fit=crop"
     },
     {
-        id: 'featured-story-2',
-        category: 'Featured Story',
-        title: 'Minimalism Meets Maximalism',
-        subtitle: 'The unexpected harmony between contrasting design philosophies',
-        author: 'Elena Kowalski',
-        date: 'July 28, 2025',
-        image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&h=600&fit=crop',
-        content: 'In a world of extremes, designers are finding beauty in contradiction...'
+        id: 2,
+        title: "Art Gallery Fashion Shows",
+        description: "When fashion meets fine art in unconventional runway presentations.",
+        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop"
     },
     {
-        id: 'featured-story-3',
-        category: 'Featured Story',
-        title: 'Digital Fashion Revolution',
-        subtitle: 'How virtual designs are changing the way we think about clothing',
-        author: 'Marcus Rodriguez',
-        date: 'July 27, 2025',
-        image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&h=600&fit=crop',
-        content: 'Virtual fashion is opening new possibilities for creative expression...'
+        id: 3,
+        title: "Fashion Photography Evolution",
+        description: "The changing landscape of fashion imagery in the digital age.",
+        image: "https://images.unsplash.com/photo-1506629905877-c19d0ac2bfb9?w=300&h=200&fit=crop"
+    }
+];
+
+let fashionWeekContent = [
+    {
+        id: 1,
+        title: "Paris Fashion Week SS26",
+        detail: "Spring/Summer 2026 Collections",
+        image: "https://images.unsplash.com/photo-1594736797933-d0dfde661e22?w=250&h=300&fit=crop"
+    },
+    {
+        id: 2,
+        title: "Milan Fashion Week",
+        detail: "Ready-to-Wear Collections",
+        image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=250&h=300&fit=crop"
+    },
+    {
+        id: 3,
+        title: "New York Fashion Week",
+        detail: "Emerging Designer Showcase",
+        image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=250&h=300&fit=crop"
+    },
+    {
+        id: 4,
+        title: "London Fashion Week",
+        detail: "Sustainable Fashion Focus",
+        image: "https://images.unsplash.com/photo-1540479859555-17af45c78602?w=250&h=300&fit=crop"
     }
 ];
 
@@ -102,7 +117,8 @@ let currentArticlesShown = 6;
 // Initialize website
 document.addEventListener('DOMContentLoaded', function() {
     loadArticles();
-    loadFeaturedStories();
+    loadCultureContent();
+    loadFashionWeekContent();
     initializeHeroSlider();
 });
 
@@ -141,36 +157,34 @@ function loadMoreArticles() {
     loadArticles();
 }
 
-// Load featured stories into hero slider
-function loadFeaturedStories() {
-    const heroSlider = document.querySelector('.hero-slider');
-    const heroPagination = document.querySelector('.hero-pagination');
-    
-    if (featuredStories.length === 0) return;
-    
-    // Create hero slides
-    heroSlider.innerHTML = featuredStories.map((story, index) => `
-        <div class="hero-slide ${index === 0 ? 'active' : ''}">
-            <div class="hero-content">
-                <span class="hero-category">${story.category}</span>
-                <h1>${story.title}</h1>
-                <p>${story.subtitle}</p>
-                <div class="hero-meta">
-                    <span class="author">By ${story.author}</span>
-                    <span class="date">${story.date}</span>
-                </div>
-                <button class="read-more-btn" onclick="openArticle('${story.id}')">Read More</button>
+// Load culture content
+function loadCultureContent() {
+    const cultureGrid = document.getElementById('culture-grid');
+    cultureGrid.innerHTML = cultureContent.map(item => `
+        <div class="culture-item" onclick="openCultureItem(${item.id})">
+            <div class="culture-image">
+                <img src="${item.image}" alt="${item.title}" />
             </div>
-            <div class="hero-image">
-                <img src="${story.image}" alt="${story.title}" />
+            <div class="culture-content">
+                <h3 class="culture-title">${item.title}</h3>
+                <p class="culture-description">${item.description}</p>
             </div>
         </div>
     `).join('');
-    
-    // Create pagination dots
-    heroPagination.innerHTML = featuredStories.map((_, index) => 
-        `<span class="dot ${index === 0 ? 'active' : ''}" onclick="goToSlide(${index})"></span>`
-    ).join('');
+}
+
+// Load fashion week content
+function loadFashionWeekContent() {
+    const fashionGallery = document.getElementById('fashion-gallery');
+    fashionGallery.innerHTML = fashionWeekContent.map(item => `
+        <div class="fashion-item" onclick="openFashionItem(${item.id})">
+            <img src="${item.image}" alt="${item.title}" />
+            <div class="fashion-overlay">
+                <div class="fashion-title">${item.title}</div>
+                <div class="fashion-detail">${item.detail}</div>
+            </div>
+        </div>
+    `).join('');
 }
 
 // Hero slider functionality
@@ -182,38 +196,13 @@ function initializeHeroSlider() {
 }
 
 function nextSlide() {
-    const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.dot');
-    const activeSlide = document.querySelector('.hero-slide.active');
     const activeDot = document.querySelector('.dot.active');
+    const currentIndex = Array.from(dots).indexOf(activeDot);
+    const nextIndex = (currentIndex + 1) % dots.length;
     
-    if (!activeSlide || !activeDot || slides.length === 0) return;
-    
-    const currentIndex = Array.from(slides).indexOf(activeSlide);
-    const nextIndex = (currentIndex + 1) % slides.length;
-    
-    // Update slides
-    slides[currentIndex].classList.remove('active');
-    slides[nextIndex].classList.add('active');
-    
-    // Update dots
     dots[currentIndex].classList.remove('active');
     dots[nextIndex].classList.add('active');
-}
-
-function goToSlide(index) {
-    const slides = document.querySelectorAll('.hero-slide');
-    const dots = document.querySelectorAll('.dot');
-    
-    // Remove active class from all slides and dots
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-    
-    // Add active class to selected slide and dot
-    if (slides[index] && dots[index]) {
-        slides[index].classList.add('active');
-        dots[index].classList.add('active');
-    }
 }
 
 // Navigation functions
@@ -262,12 +251,7 @@ function subscribeNewsletter(event) {
 
 // Article functions
 function openArticle(articleId) {
-    // Check in both articles and featured stories
-    let article = articles.find(a => a.id === articleId);
-    if (!article) {
-        article = featuredStories.find(s => s.id === articleId);
-    }
-    
+    const article = articles.find(a => a.id === articleId);
     if (!article) return;
     
     const articleModal = document.getElementById('article-modal');
@@ -298,6 +282,20 @@ function openArticle(articleId) {
 
 function closeArticleModal() {
     document.getElementById('article-modal').style.display = 'none';
+}
+
+function openCultureItem(itemId) {
+    const item = cultureContent.find(c => c.id === itemId);
+    if (!item) return;
+    
+    alert(`Opening: ${item.title}\n\n${item.description}\n\nThis would typically open a detailed page or modal with full content.`);
+}
+
+function openFashionItem(itemId) {
+    const item = fashionWeekContent.find(f => f.id === itemId);
+    if (!item) return;
+    
+    alert(`Opening: ${item.title}\n${item.detail}\n\nThis would typically open a gallery or detailed fashion week coverage.`);
 }
 
 // Smooth scrolling for navigation links
@@ -374,7 +372,7 @@ const observer = new IntersectionObserver((entries) => {
 
 // Observe elements for animations
 document.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll('.article-card');
+    const animatedElements = document.querySelectorAll('.article-card, .culture-item, .fashion-item');
     animatedElements.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
@@ -386,16 +384,22 @@ document.addEventListener('DOMContentLoaded', () => {
 // Function to load admin-managed content
 function loadAdminContent() {
     const adminArticles = localStorage.getItem('adminArticles');
-    const adminFeaturedStories = localStorage.getItem('adminFeaturedStories');
+    const adminCulture = localStorage.getItem('adminCulture');
+    const adminFashion = localStorage.getItem('adminFashion');
     
     if (adminArticles) {
         articles = JSON.parse(adminArticles);
         loadArticles();
     }
     
-    if (adminFeaturedStories) {
-        featuredStories = JSON.parse(adminFeaturedStories);
-        loadFeaturedStories();
+    if (adminCulture) {
+        cultureContent = JSON.parse(adminCulture);
+        loadCultureContent();
+    }
+    
+    if (adminFashion) {
+        fashionWeekContent = JSON.parse(adminFashion);
+        loadFashionWeekContent();
     }
 }
 
@@ -403,48 +407,3 @@ function loadAdminContent() {
 document.addEventListener('DOMContentLoaded', () => {
     loadAdminContent();
 });
-
-// Contact form submission
-function submitContactForm(event) {
-    event.preventDefault();
-    
-    const formData = {
-        name: document.getElementById('contact-name').value,
-        email: document.getElementById('contact-email').value,
-        subject: document.getElementById('contact-subject').value,
-        message: document.getElementById('contact-message').value
-    };
-    
-    // Create mailto link with form data
-    const emailSubject = `[Soigné Contact] ${formData.subject} - ${formData.name}`;
-    const emailBody = `
-Name: ${formData.name}
-Email: ${formData.email}
-Subject: ${formData.subject}
-
-Message:
-${formData.message}
-
----
-Sent from Soigné Magazine Contact Form
-    `.trim();
-    
-    const mailtoLink = `mailto:hello@soigne-magazine.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-    
-    // Show confirmation message
-    const submitBtn = event.target.querySelector('.contact-submit-btn');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Opening Email Client...';
-    submitBtn.disabled = true;
-    
-    // Open email client
-    window.location.href = mailtoLink;
-    
-    // Reset form after a short delay
-    setTimeout(() => {
-        event.target.reset();
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-        alert('Thank you for your message! Your email client should have opened with a pre-filled message. If not, please email us directly at hello@soigne-magazine.com');
-    }, 2000);
-}

@@ -2,25 +2,24 @@
 
 // Global variables for content management
 let articles = [
-    { id: 1, title: "Sustainable Fashion: The Future is Now", category: "Editorial", author: "Sarah Chen", date: "2025-07-28", image: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&h=250&fit=crop", excerpt: "Exploring how eco-conscious brands are revolutionizing sustainable practices...", content: "The industry is undergoing a revolutionary transformation towards sustainability..." },
-    { id: 2, title: "Minimalism in Contemporary Design", category: "Editorial", author: "Elena Kowalski", date: "2025-07-27", image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&h=250&fit=crop", excerpt: "The unexpected harmony between contrasting design philosophies in contemporary collections...", content: "In a world of extremes, designers are finding beauty in contradiction..." },
-    { id: 3, title: "Interview with Rising Designer Maria Santos", category: "Interview", author: "Marcus Rodriguez", date: "2025-07-26", image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=250&fit=crop", excerpt: "An exclusive conversation with one of today's most promising talents...", content: "Maria Santos is redefining what it means to be an independent designer..." }
+    { id: 1, title: "Sustainable Fashion: The Future is Now", category: "Editorial", author: "Sarah Chen", date: "2025-07-28", image: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&h=250&fit=crop", excerpt: "Exploring how eco-conscious brands are revolutionizing the fashion industry...", content: "The fashion industry is undergoing a revolutionary transformation..." },
+    { id: 2, title: "Street Style Chronicles: Tokyo Edition", category: "Fashion", author: "Yuki Tanaka", date: "2025-07-27", image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=400&h=250&fit=crop", excerpt: "A visual journey through Tokyo's most innovative street fashion...", content: "Tokyo's streets serve as a living canvas for fashion expression..." },
+    { id: 3, title: "The Rise of Digital Fashion Weeks", category: "Culture", author: "Marcus Rodriguez", date: "2025-07-26", image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=250&fit=crop", excerpt: "How virtual runway shows are reshaping the fashion calendar...", content: "The pandemic accelerated a digital transformation..." }
 ];
 
 let mediaLibrary = [
-    { id: 1, title: "Editorial Portrait", url: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=400&h=250&fit=crop", alt: "Editorial portrait photography", tags: ["editorial", "portrait", "photography"] },
-    { id: 2, title: "Sustainable Materials", url: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&h=250&fit=crop", alt: "Sustainable materials showcase", tags: ["sustainable", "materials", "eco"] },
-    { id: 3, title: "Design Process", url: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=250&fit=crop", alt: "Creative design process", tags: ["design", "creative", "process"] }
+    { id: 1, title: "Tokyo Street Fashion", url: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=400&h=250&fit=crop", alt: "Tokyo street style fashion", tags: ["fashion", "tokyo", "street"] },
+    { id: 2, title: "Sustainable Materials", url: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&h=250&fit=crop", alt: "Sustainable fashion materials", tags: ["sustainable", "materials", "eco"] },
+    { id: 3, title: "Fashion Week Runway", url: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=250&fit=crop", alt: "Fashion week runway show", tags: ["runway", "fashion-week", "model"] }
 ];
 
-let featuredStories = [
-    { id: 'featured-story-1', category: 'Featured Story', title: 'The Future of Sustainable Fashion', subtitle: 'Exploring how conscious design is reshaping the industry\'s landscape', author: 'Sarah Chen', date: '2025-07-29', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&h=600&fit=crop', content: 'The fashion industry is undergoing a revolutionary transformation towards sustainability...' },
-    { id: 'featured-story-2', category: 'Featured Story', title: 'Minimalism Meets Maximalism', subtitle: 'The unexpected harmony between contrasting design philosophies', author: 'Elena Kowalski', date: '2025-07-28', image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&h=600&fit=crop', content: 'In a world of extremes, designers are finding beauty in contradiction...' },
-    { id: 'featured-story-3', category: 'Featured Story', title: 'Digital Fashion Revolution', subtitle: 'How virtual designs are changing the way we think about clothing', author: 'Marcus Rodriguez', date: '2025-07-27', image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&h=600&fit=crop', content: 'Virtual fashion is opening new possibilities for creative expression...' }
+let cultureContent = [
+    { id: 1, title: "Music & Fashion Collaborations", type: "Music", image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=200&fit=crop", description: "How artists and designers create cultural moments through fashion partnerships." },
+    { id: 2, title: "Art Gallery Fashion Shows", type: "Art", image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop", description: "When fashion meets fine art in unconventional runway presentations." }
 ];
 
 let currentEditingArticle = null;
-let currentEditingFeatured = null;
+let currentEditingCulture = null;
 let charts = {};
 
 // Initialize admin panel
@@ -34,8 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
     showSection('dashboard');
     updateDashboardStats();
     renderArticles();
-    renderFeaturedStories();
     renderMediaLibrary();
+    renderCultureContent();
     initializeCharts();
 });
 
@@ -68,10 +67,10 @@ function showSection(sectionName) {
 // Dashboard functions
 function updateDashboardStats() {
     document.getElementById('total-articles').textContent = articles.length;
-    document.getElementById('total-featured').textContent = featuredStories.length;
     document.getElementById('total-media').textContent = mediaLibrary.length;
     // Simulate dynamic stats
-    document.getElementById('total-subscribers').textContent = '1,247';
+    document.getElementById('total-views').textContent = '15.2K';
+    document.getElementById('engagement-rate').textContent = '4.2%';
 }
 
 // Article management functions
@@ -233,134 +232,6 @@ function filterArticles() {
     articles = originalArticles;
 }
 
-// Featured Stories management functions
-function showAddFeaturedForm() {
-    document.getElementById('featured-form').classList.remove('hidden');
-    document.getElementById('featured-form-title').textContent = 'Add Featured Story';
-    clearFeaturedForm();
-    currentEditingFeatured = null;
-}
-
-function hideFeaturedForm() {
-    document.getElementById('featured-form').classList.add('hidden');
-    clearFeaturedForm();
-    currentEditingFeatured = null;
-}
-
-function clearFeaturedForm() {
-    document.getElementById('featured-title').value = '';
-    document.getElementById('featured-subtitle').value = '';
-    document.getElementById('featured-author').value = '';
-    document.getElementById('featured-date').value = '';
-    document.getElementById('featured-image').value = '';
-    document.getElementById('featured-content').value = '';
-}
-
-function saveFeaturedStory(event) {
-    event.preventDefault();
-    
-    const featuredData = {
-        title: document.getElementById('featured-title').value,
-        subtitle: document.getElementById('featured-subtitle').value,
-        author: document.getElementById('featured-author').value,
-        date: document.getElementById('featured-date').value,
-        image: document.getElementById('featured-image').value,
-        content: document.getElementById('featured-content').value,
-        category: 'Featured Story'
-    };
-    
-    if (currentEditingFeatured) {
-        // Update existing featured story
-        const index = featuredStories.findIndex(f => f.id === currentEditingFeatured);
-        featuredStories[index] = { ...featuredStories[index], ...featuredData };
-    } else {
-        // Add new featured story
-        const newFeatured = {
-            id: 'featured-story-' + (featuredStories.length + 1),
-            ...featuredData
-        };
-        featuredStories.push(newFeatured);
-    }
-    
-    renderFeaturedStories();
-    hideFeaturedForm();
-    updateMainWebsite();
-    updateDashboardStats();
-    
-    alert(currentEditingFeatured ? 'Featured story updated successfully!' : 'Featured story added successfully!');
-}
-
-function renderFeaturedStories() {
-    const tableContainer = document.getElementById('featured-table');
-    
-    if (featuredStories.length === 0) {
-        tableContainer.innerHTML = '<p style="padding: 20px; text-align: center; color: #64748b;">No featured stories found.</p>';
-        return;
-    }
-    
-    const table = `
-        <table>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Date</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${featuredStories.map(story => `
-                    <tr>
-                        <td>
-                            <div class="content-preview">
-                                <img src="${story.image}" alt="${story.title}" style="width: 60px; height: 40px; object-fit: cover; border-radius: 5px; margin-right: 10px;">
-                                <div>
-                                    <strong>${story.title}</strong>
-                                    <br><small>${story.subtitle}</small>
-                                </div>
-                            </div>
-                        </td>
-                        <td>${story.author}</td>
-                        <td>${story.date}</td>
-                        <td class="content-actions">
-                            <button class="edit-btn" onclick="editFeaturedStory('${story.id}')">Edit</button>
-                            <button class="delete-btn" onclick="deleteFeaturedStory('${story.id}')">Delete</button>
-                        </td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-    `;
-    
-    tableContainer.innerHTML = table;
-}
-
-function editFeaturedStory(id) {
-    const story = featuredStories.find(f => f.id === id);
-    if (!story) return;
-    
-    currentEditingFeatured = id;
-    document.getElementById('featured-form-title').textContent = 'Edit Featured Story';
-    document.getElementById('featured-title').value = story.title;
-    document.getElementById('featured-subtitle').value = story.subtitle;
-    document.getElementById('featured-author').value = story.author;
-    document.getElementById('featured-date').value = story.date;
-    document.getElementById('featured-image').value = story.image;
-    document.getElementById('featured-content').value = story.content;
-    
-    document.getElementById('featured-form').classList.remove('hidden');
-}
-
-function deleteFeaturedStory(id) {
-    if (confirm('Are you sure you want to delete this featured story?')) {
-        featuredStories = featuredStories.filter(f => f.id !== id);
-        renderFeaturedStories();
-        updateMainWebsite();
-        updateDashboardStats();
-        alert('Featured story deleted successfully!');
-    }
-}
-
 // Media management functions
 function showUploadForm() {
     document.getElementById('upload-form').classList.remove('hidden');
@@ -438,6 +309,122 @@ function copyMediaUrl(url) {
     navigator.clipboard.writeText(url).then(() => {
         alert('Media URL copied to clipboard!');
     });
+}
+
+// Culture content management
+function showAddCultureForm() {
+    document.getElementById('culture-form').classList.remove('hidden');
+    document.getElementById('culture-form-title').textContent = 'Add Culture Content';
+    clearCultureForm();
+    currentEditingCulture = null;
+}
+
+function hideCultureForm() {
+    document.getElementById('culture-form').classList.add('hidden');
+    clearCultureForm();
+    currentEditingCulture = null;
+}
+
+function clearCultureForm() {
+    document.getElementById('culture-title').value = '';
+    document.getElementById('culture-type').value = '';
+    document.getElementById('culture-image').value = '';
+    document.getElementById('culture-description').value = '';
+}
+
+function saveCultureContent(event) {
+    event.preventDefault();
+    
+    const cultureData = {
+        title: document.getElementById('culture-title').value,
+        type: document.getElementById('culture-type').value,
+        image: document.getElementById('culture-image').value,
+        description: document.getElementById('culture-description').value
+    };
+    
+    if (currentEditingCulture) {
+        // Update existing content
+        const index = cultureContent.findIndex(c => c.id === currentEditingCulture);
+        cultureContent[index] = { ...cultureContent[index], ...cultureData };
+    } else {
+        // Add new content
+        const newContent = {
+            id: Math.max(...cultureContent.map(c => c.id)) + 1,
+            ...cultureData
+        };
+        cultureContent.push(newContent);
+    }
+    
+    renderCultureContent();
+    hideCultureForm();
+    updateMainWebsite();
+    
+    alert(currentEditingCulture ? 'Culture content updated successfully!' : 'Culture content published successfully!');
+}
+
+function renderCultureContent() {
+    const tableContainer = document.getElementById('culture-table');
+    
+    if (cultureContent.length === 0) {
+        tableContainer.innerHTML = '<p style="padding: 20px; text-align: center; color: #64748b;">No culture content found.</p>';
+        return;
+    }
+    
+    const table = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${cultureContent.map(content => `
+                    <tr>
+                        <td>
+                            <div class="content-preview">
+                                <img src="${content.image}" alt="${content.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; margin-right: 10px;">
+                                <strong>${content.title}</strong>
+                            </div>
+                        </td>
+                        <td><span class="type-tag">${content.type}</span></td>
+                        <td>${content.description.substring(0, 80)}...</td>
+                        <td class="content-actions">
+                            <button class="edit-btn" onclick="editCultureContent(${content.id})">Edit</button>
+                            <button class="delete-btn" onclick="deleteCultureContent(${content.id})">Delete</button>
+                        </td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+    
+    tableContainer.innerHTML = table;
+}
+
+function editCultureContent(id) {
+    const content = cultureContent.find(c => c.id === id);
+    if (!content) return;
+    
+    currentEditingCulture = id;
+    document.getElementById('culture-form-title').textContent = 'Edit Culture Content';
+    document.getElementById('culture-title').value = content.title;
+    document.getElementById('culture-type').value = content.type;
+    document.getElementById('culture-image').value = content.image;
+    document.getElementById('culture-description').value = content.description;
+    
+    document.getElementById('culture-form').classList.remove('hidden');
+}
+
+function deleteCultureContent(id) {
+    if (confirm('Are you sure you want to delete this culture content?')) {
+        cultureContent = cultureContent.filter(c => c.id !== id);
+        renderCultureContent();
+        updateMainWebsite();
+        alert('Culture content deleted successfully!');
+    }
 }
 
 // Analytics functions
@@ -542,7 +529,7 @@ function updateCharts() {
 // Update main website with admin changes
 function updateMainWebsite() {
     localStorage.setItem('adminArticles', JSON.stringify(articles));
-    localStorage.setItem('adminFeaturedStories', JSON.stringify(featuredStories));
+    localStorage.setItem('adminCulture', JSON.stringify(cultureContent));
     localStorage.setItem('adminMedia', JSON.stringify(mediaLibrary));
 }
 

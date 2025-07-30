@@ -14,9 +14,9 @@
             <div class="logo">Soigné CMS</div>
             <div class="admin-nav">
                 <button class="nav-btn active" onclick="showSection('dashboard')">Dashboard</button>
-                <button class="nav-btn" onclick="showSection('featured')">Featured Stories</button>
                 <button class="nav-btn" onclick="showSection('articles')">Articles</button>
                 <button class="nav-btn" onclick="showSection('media')">Media</button>
+                <button class="nav-btn" onclick="showSection('culture')">Culture</button>
                 <button class="nav-btn" onclick="showSection('analytics')">Analytics</button>
             </div>
             <div class="admin-actions">
@@ -36,41 +36,37 @@
                 <div class="stat-card">
                     <div class="stat-icon">📰</div>
                     <div class="stat-info">
-                        <h3 id="total-articles">3</h3>
+                        <h3 id="total-articles">6</h3>
                         <p>Published Articles</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">⭐</div>
-                    <div class="stat-info">
-                        <h3 id="total-featured">3</h3>
-                        <p>Featured Stories</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">📸</div>
                     <div class="stat-info">
-                        <h3 id="total-media">3</h3>
+                        <h3 id="total-media">24</h3>
                         <p>Media Files</p>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">👥</div>
+                    <div class="stat-icon">👁️</div>
                     <div class="stat-info">
-                        <h3 id="total-subscribers">1,247</h3>
-                        <p>Newsletter Subscribers</p>
+                        <h3 id="total-views">15.2K</h3>
+                        <p>Page Views</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-info">
+                        <h3 id="engagement-rate">4.2%</h3>
+                        <p>Engagement Rate</p>
                     </div>
                 </div>
             </div>
 
             <!-- Quick Actions -->
-            <div class="dashboard-section">
+            <div class="quick-actions">
                 <h2>Quick Actions</h2>
-                <div class="quick-actions">
-                    <button class="action-btn" onclick="showSection('featured')">
-                        <span>⭐</span>
-                        Manage Featured Stories
-                    </button>
+                <div class="action-buttons">
                     <button class="action-btn" onclick="showSection('articles')">
                         <span>✍️</span>
                         Create Article
@@ -78,6 +74,10 @@
                     <button class="action-btn" onclick="showSection('media')">
                         <span>📷</span>
                         Upload Media
+                    </button>
+                    <button class="action-btn" onclick="showSection('culture')">
+                        <span>🎨</span>
+                        Add Culture Content
                     </button>
                 </div>
             </div>
@@ -95,81 +95,9 @@
                         <div class="activity-time">4 hours ago</div>
                     </div>
                     <div class="activity-item">
-                        <div>New article "Minimalism Meets Maximalism" published</div>
+                        <div>Culture content "Music & Fashion Collaborations" added</div>
                         <div class="activity-time">1 day ago</div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Stories Section -->
-    <section id="featured" class="admin-section">
-        <div class="featured-container">
-            <div class="section-header">
-                <h1>Featured Stories Management</h1>
-                <button class="primary-btn" onclick="showAddFeaturedForm()">Add Featured Story</button>
-            </div>
-
-            <!-- Add/Edit Featured Story Form -->
-            <div id="featured-form" class="content-form hidden">
-                <h2 id="featured-form-title">Add Featured Story</h2>
-                <form onsubmit="saveFeaturedStory(event)">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="featured-title">Title *</label>
-                            <input type="text" id="featured-title" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="featured-author">Author *</label>
-                            <input type="text" id="featured-author" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="featured-subtitle">Subtitle *</label>
-                        <input type="text" id="featured-subtitle" placeholder="Brief description that appears below the title" required>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="featured-date">Publication Date *</label>
-                            <input type="date" id="featured-date" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="featured-category">Category</label>
-                            <input type="text" id="featured-category" value="Featured Story" readonly>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="featured-image">Hero Image URL *</label>
-                        <input type="url" id="featured-image" placeholder="https://images.unsplash.com/..." required>
-                        <small>Recommended size: 800x600px or larger</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="featured-content">Content *</label>
-                        <textarea id="featured-content" rows="6" placeholder="Main content of the featured story..." required></textarea>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" class="secondary-btn" onclick="hideFeaturedForm()">Cancel</button>
-                        <button type="submit" class="primary-btn">Save Featured Story</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Featured Stories List -->
-            <div class="content-list">
-                <div class="list-header">
-                    <h2>Current Featured Stories</h2>
-                    <div class="filters">
-                        <span class="filter-info">Stories appear in hero slider rotation</span>
-                    </div>
-                </div>
-                <div id="featured-table" class="content-table">
-                    <!-- Featured stories will be populated here -->
                 </div>
             </div>
         </div>
@@ -189,7 +117,7 @@
                 <form onsubmit="saveArticle(event)">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="article-title">Title</label>
+                            <label for="article-title">Article Title</label>
                             <input type="text" id="article-title" required>
                         </div>
                         <div class="form-group">
@@ -197,6 +125,8 @@
                             <select id="article-category" required>
                                 <option value="">Select Category</option>
                                 <option value="Editorial">Editorial</option>
+                                <option value="Fashion">Fashion</option>
+                                <option value="Culture">Culture</option>
                                 <option value="Interview">Interview</option>
                                 <option value="Review">Review</option>
                             </select>
@@ -225,7 +155,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="article-content">Content</label>
+                        <label for="article-content">Article Content</label>
                         <textarea id="article-content" rows="10" placeholder="Full article content..." required></textarea>
                     </div>
 
@@ -236,14 +166,17 @@
                 </form>
             </div>
 
-            <!-- Article List -->
+            <!-- Articles List -->
             <div class="content-list">
                 <div class="list-header">
                     <h2>Published Articles</h2>
-                    <div class="filters">
-                        <select id="article-filter" onchange="filterArticles()">
+                    <div class="search-filter">
+                        <input type="text" id="search-articles" placeholder="Search articles..." onkeyup="filterArticles()">
+                        <select id="filter-article-category" onchange="filterArticles()">
                             <option value="">All Categories</option>
                             <option value="Editorial">Editorial</option>
+                            <option value="Fashion">Fashion</option>
+                            <option value="Culture">Culture</option>
                             <option value="Interview">Interview</option>
                             <option value="Review">Review</option>
                         </select>
@@ -274,26 +207,25 @@
                             <p>Add image URL or description</p>
                         </div>
                     </div>
-
+                    
                     <div class="form-group">
                         <label for="media-url">Image URL</label>
                         <input type="url" id="media-url" placeholder="https://images.unsplash.com/..." required>
                     </div>
+                    
+                    <div class="form-group">
+                        <label for="media-title">Media Title</label>
+                        <input type="text" id="media-title" required>
+                    </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="media-title">Title</label>
-                            <input type="text" id="media-title" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="media-alt">Alt Text</label>
-                            <input type="text" id="media-alt" placeholder="Descriptive text for accessibility" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="media-alt">Alt Text</label>
+                        <input type="text" id="media-alt" placeholder="Describe the image for accessibility">
                     </div>
 
                     <div class="form-group">
                         <label for="media-tags">Tags</label>
-                        <input type="text" id="media-tags" placeholder="editorial, interview, review (comma separated)">
+                        <input type="text" id="media-tags" placeholder="fashion, editorial, culture (comma separated)">
                     </div>
 
                     <div class="form-actions">
@@ -304,8 +236,67 @@
             </div>
 
             <!-- Media Gallery -->
-            <div id="media-gallery" class="media-gallery">
+            <div class="media-gallery" id="media-gallery">
                 <!-- Media items will be populated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Culture Section -->
+    <section id="culture" class="admin-section">
+        <div class="culture-container">
+            <div class="section-header">
+                <h1>Culture & Lifestyle Content</h1>
+                <button class="primary-btn" onclick="showAddCultureForm()">Add Culture Content</button>
+            </div>
+
+            <!-- Add Culture Form -->
+            <div id="culture-form" class="content-form hidden">
+                <h2 id="culture-form-title">Add Culture Content</h2>
+                <form onsubmit="saveCultureContent(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="culture-title">Title</label>
+                            <input type="text" id="culture-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="culture-type">Content Type</label>
+                            <select id="culture-type" required>
+                                <option value="">Select Type</option>
+                                <option value="Music">Music</option>
+                                <option value="Art">Art</option>
+                                <option value="Photography">Photography</option>
+                                <option value="Lifestyle">Lifestyle</option>
+                                <option value="Events">Events</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="culture-image">Featured Image URL</label>
+                        <input type="url" id="culture-image" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="culture-description">Description</label>
+                        <textarea id="culture-description" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="secondary-btn" onclick="hideCultureForm()">Cancel</button>
+                        <button type="submit" class="primary-btn">Publish Content</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Culture Content List -->
+            <div class="content-list">
+                <div class="list-header">
+                    <h2>Culture Content</h2>
+                </div>
+                <div id="culture-table" class="content-table">
+                    <!-- Culture content will be populated here -->
+                </div>
             </div>
         </div>
     </section>
@@ -328,16 +319,39 @@
                     <canvas id="engagement-chart"></canvas>
                 </div>
 
-                <!-- Category Distribution -->
+                <!-- Content Categories -->
                 <div class="chart-card">
-                    <h3>Content Categories</h3>
-                    <canvas id="category-chart"></canvas>
+                    <h3>Content Distribution</h3>
+                    <canvas id="content-category-chart"></canvas>
                 </div>
 
                 <!-- Traffic Sources -->
                 <div class="chart-card">
                     <h3>Traffic Sources</h3>
                     <canvas id="traffic-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- Detailed Analytics -->
+            <div class="detailed-analytics">
+                <h2>Top Performing Content</h2>
+                <div id="top-content" class="top-content-list">
+                    <div class="content-performance-item">
+                        <h4>Sustainable Fashion: The Future is Now</h4>
+                        <div class="performance-stats">
+                            <span>2.3K views</span>
+                            <span>89 shares</span>
+                            <span>5.2% engagement</span>
+                        </div>
+                    </div>
+                    <div class="content-performance-item">
+                        <h4>Street Style Chronicles: Tokyo Edition</h4>
+                        <div class="performance-stats">
+                            <span>1.8K views</span>
+                            <span>67 shares</span>
+                            <span>4.1% engagement</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
